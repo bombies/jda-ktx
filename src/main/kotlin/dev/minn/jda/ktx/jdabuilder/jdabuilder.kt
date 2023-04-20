@@ -18,6 +18,7 @@ package dev.minn.jda.ktx.jdabuilder
 
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import kotlin.time.Duration
 
@@ -127,6 +128,15 @@ inline fun default(token: String, enableCoroutines: Boolean = true, timeout: Dur
             }
             .build()
 
+inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, intent: GatewayIntent, vararg intents: GatewayIntent, builder: DefaultShardManagerBuilder.() -> Unit = {})
+        = DefaultShardManagerBuilder.createDefault(token, intent, *intents)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .build()
+
 /**
  * Convenience method to call [JDABuilder.createDefault] and apply a coroutine manager.
  *
@@ -152,6 +162,15 @@ inline fun default(token: String, enableCoroutines: Boolean = true, timeout: Dur
             }
             .build()
 
+inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, intents: Collection<GatewayIntent>, builder: DefaultShardManagerBuilder.() -> Unit = {})
+        = DefaultShardManagerBuilder.createDefault(token, intents)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .build()
+
 /**
  * Convenience method to call [JDABuilder.createDefault] and apply a coroutine manager.
  * Uses the default intends provided by [JDABuilder.createDefault].
@@ -175,6 +194,15 @@ inline fun default(token: String, enableCoroutines: Boolean = true, timeout: Dur
                     injectKTX(timeout=timeout)
             }
             .build()
+
+inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, builder: DefaultShardManagerBuilder.() -> Unit = {})
+        = DefaultShardManagerBuilder.createDefault(token)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .build()
 
 
 

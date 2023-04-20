@@ -33,7 +33,7 @@ fun String.toEmoji() = Emoji.fromFormatted(this)
 /**
  * Parses the custom emoji instance from this format-string.
  *
- * This should be using the markdown format such as `<:name:id>`.
+ * This should be using the Markdown format such as `<:name:id>`.
  *
  * @throws[IllegalArgumentException] If the string is not a valid emoji format
  * @throws[NumberFormatException] If the id is not a valid long
