@@ -16,6 +16,7 @@
 
 package dev.minn.jda.ktx.jdabuilder
 
+import dev.schlaubi.lavakord.jda.buildWithLavakord
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
@@ -137,6 +138,15 @@ inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout
     }
     .build()
 
+suspend inline fun defaultShardWithLavakord(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, intent: GatewayIntent, vararg intents: GatewayIntent, builder: DefaultShardManagerBuilder.() -> Unit = {})
+        = DefaultShardManagerBuilder.createDefault(token, intent, *intents)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .buildWithLavakord()
+
 /**
  * Convenience method to call [JDABuilder.createDefault] and apply a coroutine manager.
  *
@@ -162,7 +172,13 @@ inline fun default(token: String, enableCoroutines: Boolean = true, timeout: Dur
             }
             .build()
 
-inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, intents: Collection<GatewayIntent>, builder: DefaultShardManagerBuilder.() -> Unit = {})
+inline fun defaultShard(
+    token: String,
+    enableCoroutines: Boolean = true,
+    timeout: Duration = Duration.INFINITE,
+    intents: Collection<GatewayIntent>,
+    builder: DefaultShardManagerBuilder.() -> Unit = {}
+)
         = DefaultShardManagerBuilder.createDefault(token, intents)
     .apply(builder)
     .apply {
@@ -170,6 +186,21 @@ inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout
             injectKTX(timeout=timeout)
     }
     .build()
+
+suspend inline fun defaultShardWithLavakord(
+    token: String,
+    enableCoroutines: Boolean = true,
+    timeout: Duration = Duration.INFINITE,
+    intents: Collection<GatewayIntent>,
+    builder: DefaultShardManagerBuilder.() -> Unit = {}
+)
+        = DefaultShardManagerBuilder.createDefault(token, intents)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .buildWithLavakord()
 
 /**
  * Convenience method to call [JDABuilder.createDefault] and apply a coroutine manager.
@@ -203,6 +234,15 @@ inline fun defaultShard(token: String, enableCoroutines: Boolean = true, timeout
             injectKTX(timeout=timeout)
     }
     .build()
+
+suspend inline fun defaultShardWithLavakord(token: String, enableCoroutines: Boolean = true, timeout: Duration = Duration.INFINITE, builder: DefaultShardManagerBuilder.() -> Unit = {})
+        = DefaultShardManagerBuilder.createDefault(token)
+    .apply(builder)
+    .apply {
+        if (enableCoroutines)
+            injectKTX(timeout=timeout)
+    }
+    .buildWithLavakord()
 
 
 

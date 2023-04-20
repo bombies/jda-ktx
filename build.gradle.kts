@@ -53,6 +53,7 @@ repositories {
 
 dependencies {
     compileOnly("net.dv8tion:JDA:5.0.0-beta.8")
+    implementation("dev.schlaubi.lavakord:jda-java-jvm:4.0.0")
 //    compileOnly("com.github.dv8fromtheworld:JDA:8571e62")
     compileOnly("ch.qos.logback:logback-classic:1.2.10")
     compileOnly("club.minnced:discord-webhooks:0.7.5")
