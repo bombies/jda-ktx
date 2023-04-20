@@ -9,7 +9,6 @@ buildscript {
         mavenCentral()
         maven("https://jitpack.io/")
     }
-
     dependencies {
         classpath("org.jetbrains.dokka:dokka-base:1.8.10")
     }
