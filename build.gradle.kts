@@ -11,15 +11,15 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.dokka:dokka-base:1.6.21")
+        classpath("org.jetbrains.dokka:dokka-base:1.8.10")
     }
 }
 
 plugins {
     `maven-publish`
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.8.20"
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
-    id("org.jetbrains.dokka") version "1.6.21"
+    id("org.jetbrains.dokka") version "1.8.10"
 }
 
 group = "dev.minn"
